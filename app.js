@@ -20,3 +20,14 @@ app.use('/products', productRouter);
 app.listen(PORT, () => {
   console.log(`Servidor Express levantado en el puerto ${PORT}`);
 });
+
+// /project
+// │── server.js  # Archivo principal
+// │── package.json  # Dependencias
+// │── routes
+// │   ├── users.js  # Rutas de usuarios
+// │   ├── products.js  # Rutas de productos (ejemplo adicional)
+// │── controllers
+// │   ├── userController.js  # Lógica de usuarios
+// │── models
+// │   ├── user.js  # Modelo de usuario (si se usa una base de datos)

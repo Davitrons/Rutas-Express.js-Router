@@ -9,9 +9,10 @@ const productos = [
 ];
 
 const reseñas = [
-    { productoId: 0, usuario: "Carlos", comentario: "Excelente laptop", rating: 5 },
-    { productoId: 1, usuario: "Ana", comentario: "Muy buena, pero cara", rating: 4 },
-    { productoId: 2, usuario: "Pedro", comentario: "Comodísimas", rating: 5 }
+    { reviewId: 0, productId: 0, rating: 5, comment: "Excelente laptop para gaming." },
+    { reviewId: 1, productId: 1, rating: 4, comment: "Buen teléfono, aunque algo caro." },
+    { reviewId: 2, productId: 2, rating: 5, comment: "Muy cómodas y duraderas." },
+    { reviewId: 3, productId: 3, rating: 3, comment: "Buen sonido, aunque la batería dura poco." },
 ];
 
 router.get("/", (req, res) => {
@@ -74,9 +75,20 @@ router.get("/:id/reviews", (req, res) => {
 
 router.post("/:id/reviews", (req, res) => {
     const productoId = parseInt(req.params.id);
-    const { usuario, comentario, rating } = req.body;
+    const { rating, comment } = req.body;
 
-    const nuevaReseña = { productoId, usuario, comentario, rating: parseInt(rating) };
+    const productoExiste = productos.some(p => p.id === productId);
+    if (!productoExiste) {
+        return res.json({ error: "Producto no encontrado" });
+    }
+
+    const nuevaReseña = {
+        reviewId: reseñas.length, 
+        productoId,
+        rating: parseInt(rating),
+        comment
+    };
+
     reseñas.push(nuevaReseña);
 
     res.json({ mensaje: "Reseña añadida", reseña: nuevaReseña });

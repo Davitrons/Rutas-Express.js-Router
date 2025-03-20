@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const controlMiddleware = require("../middlewares/controlFlowMiddleware")
+
 const usuarios = [
   { id: 0, nombre: "David Pérez", edad: 25, ciudad: "Linares" },
   { id: 1, nombre: "Ana Gómez", edad: 30, ciudad: "Barcelona" },
@@ -8,7 +10,7 @@ const usuarios = [
   { id: 3, nombre: "Lucía Fernández", edad: 40, ciudad: "Madrid" },
 ];
 
-router.get("/", (req, res) => {
+router.get("/", controlMiddleware, (req, res) => {
   let { edad, ciudad } = req.query;
   let resultado = usuarios;
 

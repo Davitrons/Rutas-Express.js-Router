@@ -79,15 +79,22 @@ router.post("/:id/reviews", (req, res) => {
     const nuevaReseña = { productoId, usuario, comentario, rating: parseInt(rating) };
     reseñas.push(nuevaReseña);
 
-    res.status(201).json({ mensaje: "Reseña añadida", reseña: nuevaReseña });
+    res.json({ mensaje: "Reseña añadida", reseña: nuevaReseña });
 });
 
-router.put("/:id", (req, res) => {
-    const productId = parseInt(req.params.id);
-    let resultado = productos
-    resultado = resultado.find((p) => p.id === productId)
-    resultado.destacado = false
-    res.json({ mensaje: `Se ha modificado al producto`, usuario: resultado })
+router.put("/:id", (req, res, next) => {
+    try {
+        const productId = parseInt(req.params.id);
+        let resultado = productos
+        resultado = resultado.find((p) => p.id === productId)
+        if (!resultado) {
+            throw { status: 404, message: "Producto no encontrado" };
+        }
+        resultado.destacado = false
+        res.json({ mensaje: `Se ha modificado al producto`, usuario: resultado })
+    } catch (error) {
+        next(error);
+    }
 });
 
 router.get("/search", (req, res) => { });

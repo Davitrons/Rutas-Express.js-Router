@@ -3,6 +3,10 @@ const express = require("express");
 const homeRouter = require('./routes/homeRoutes')
 const userRouter = require('./routes/userRoutes')
 const productRouter = require('./routes/productRoutes')
+
+const notFoundMiddleware = require("./middlewares/notFoundMiddleware");
+const errorHandlerMiddleware = require("./middlewares/errorHandlerMiddleware");
+
 const PORT = 3000;
 const app = express();
 
@@ -14,6 +18,12 @@ app.use('/', homeRouter);
 app.use('/users', userRouter);
 
 app.use('/products', productRouter);
+
+// Middleware de rutas no encontradas (404)
+app.use(notFoundMiddleware);
+
+// Middleware de manejo de errores
+app.use(errorHandlerMiddleware);
 
 
 // Levantar el servidor
